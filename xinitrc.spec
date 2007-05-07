@@ -1,6 +1,6 @@
 %define name    xinitrc
 %define version 2.4.19
-%define release %mkrel 1
+%define release %mkrel 2
 
 Summary:	The default startup script for the X Window System
 Name:		%{name}
@@ -50,9 +50,8 @@ BuildArchitectures:	noarch
 The xinitrc package contains the xinitrc file, a script which is used
 to configure your X Window System session or to start a window manager.
 
-#%prep
+%prep
 
-#%setup -q
 
 %install
 rm -rf $RPM_BUILD_ROOT
