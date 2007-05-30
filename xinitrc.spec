@@ -1,6 +1,6 @@
 %define name    xinitrc
 %define version 2.4.19
-%define release %mkrel 2
+%define release %mkrel 3
 
 Summary:	The default startup script for the X Window System
 Name:		%{name}
@@ -29,6 +29,8 @@ Source17: 	Xservers
 Source18: 	Xsession
 Source19: 	Xsetup_0
 Source20: 	Xwilling
+Source21: 	xdm-Xstartup
+Source22: 	xdm-Xreset
 
 License:	Public Domain
 Group:		System/X11
@@ -70,6 +72,9 @@ install -m755 $S/Xwilling $S/Xsetup_0 $S/TakeConsole $S/GiveConsole $R%{_sysconf
 install -m644 $S/xdm-config $S/Xservers $S/Xresources $S/Xaccess $R%{_sysconfdir}/X11/xdm
 install -m755 $S/xdm-Xsession $R%{_sysconfdir}/X11/xdm/Xsession
 
+install -m755 $S/xdm-Xreset $R%{_sysconfdir}/X11/xdm/Xreset
+install -m755 $S/xdm-Xstartup $R%{_sysconfdir}/X11/xdm/Xstartup
+
 install -m644 $S/xinitrc-Xmodmap $R%{_sysconfdir}/X11/Xmodmap
 for i in xinitrc Xclients fixkeyboard XIM; do install -m755 $S/xinitrc-$i $R%{_sysconfdir}/X11/xinit/$i;done
 
@@ -106,6 +111,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/X11/xdm/Xsession
 %{_sysconfdir}/X11/xdm/Xsetup_0
 %{_sysconfdir}/X11/xdm/Xwilling
+%{_sysconfdir}/X11/xdm/Xstartup
+%{_sysconfdir}/X11/xdm/Xreset
 %{_sysconfdir}/X11/xinit.d/Mod_Meta_L_Disable
 %{_sysconfdir}/X11/xinit/XIM
 %{_sysconfdir}/X11/xinit/Xclients
