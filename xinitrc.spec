@@ -1,6 +1,6 @@
 %define name    xinitrc
 %define version 2.4.19
-%define release %mkrel 3
+%define release %mkrel 4
 
 Summary:	The default startup script for the X Window System
 Name:		%{name}
