@@ -35,7 +35,6 @@ Source23:	XIM.xinit
 
 License:	Public Domain
 Group:		System/X11
-Buildroot:	%{_tmppath}/%{name}-%{version}-root
 Requires:	x11-server-xorg
 Requires:	x11-server-common
 Requires:	xdpyinfo
