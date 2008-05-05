@@ -1,6 +1,6 @@
 %define name    xinitrc
 %define version 2.4.19
-%define release %mkrel 6
+%define release %mkrel 7
 
 Summary:	The default startup script for the X Window System
 Name:		%{name}
@@ -32,6 +32,7 @@ Source20: 	Xwilling
 Source21: 	xdm-Xstartup
 Source22: 	xdm-Xreset
 Source23:	XIM.xinit
+Source24: 	kdm3.conf
 
 License:	Public Domain
 Group:		System/X11
@@ -86,6 +87,7 @@ for i in Fvwm95 MWM AfterStep WindowMaker; do ln -sf RunWM $R%{_bindir}/RunWM.$$
 
 mkdir $R%{_sysconfdir}/X11/dm.d
 install -m644 $S/kdm.conf $R%{_sysconfdir}/X11/dm.d/10kdm.conf
+install -m644 $S/kdm3.conf $R%{_sysconfdir}/X11/dm.d/15kdm3.conf
 install -m644 $S/gdm.conf $R%{_sysconfdir}/X11/dm.d/20gdm.conf
 install -m644 $S/xdm.conf $R%{_sysconfdir}/X11/dm.d/30xdm.conf
 
