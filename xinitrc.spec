@@ -39,7 +39,7 @@ Group:		System/X11
 Buildroot:	%{_tmppath}/%{name}-%{version}-root
 Requires:	x11-server-xorg
 # Because of <basedir>/X11 directory handling
-Requires:	x11-server-common > 1.4.0.90-16
+Requires:	x11-server-common > 1.4.0.90-18
 Requires:	xdpyinfo
 Requires:	xmodmap
 Requires:	xsetroot
@@ -49,6 +49,7 @@ Requires: 	sessreg
 Requires:   	xrdb
 Conflicts:	initscripts < 6.87-2mdk
 Conflicts:	gdm < 2.8.0.0
+Conflicts:	xdm < 1.1.8
 BuildArchitectures:	noarch
 
 %description
