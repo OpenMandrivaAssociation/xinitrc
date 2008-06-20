@@ -73,12 +73,14 @@ mkdir $R%{_sysconfdir}/X11/{xinit,xsetup}.d
 install -m 755 $S/xinitrc-Mod_Meta_L_Disable $R%{_sysconfdir}/X11/xinit.d/Mod_Meta_L_Disable
 install -m 755 $S/XIM.xinit $R%{_sysconfdir}/X11/xinit.d/02XIM
 mkdir $R%{_sysconfdir}/X11/wmsession.d
-install -m755 $S/Xwilling $S/Xsetup_0 $S/TakeConsole $S/GiveConsole $R%{_sysconfdir}/X11/xdm
-install -m644 $S/xdm-config $S/Xservers $S/Xresources $S/Xaccess $R%{_sysconfdir}/X11/xdm
-install -m755 $S/xdm-Xsession $R%{_sysconfdir}/X11/xdm/Xsession
+mkdir -p $R%{_datadir}/X11/xdm
+install -m755 $S/Xwilling $S/Xsetup_0 $S/TakeConsole $S/GiveConsole $R%{_datadir}/X11/xdm
+install -m644 $S/{xdm-config,Xservers,Xresources,Xaccess} $R%{_sysconfdir}/X11/xdm
+ln -s ../../../..%{_sysconfdir}/X11/xdm/{xdm-config,Xservers,Xresources,Xaccess} $R%{_datadir}/X11/xdm
+install -m755 $S/xdm-Xsession $R%{_datadir}/X11/xdm/Xsession
 
-install -m755 $S/xdm-Xreset $R%{_sysconfdir}/X11/xdm/Xreset
-install -m755 $S/xdm-Xstartup $R%{_sysconfdir}/X11/xdm/Xstartup
+install -m755 $S/xdm-Xreset $R%{_datadir}/X11/xdm/Xreset
+install -m755 $S/xdm-Xstartup $R%{_datadir}/X11/xdm/Xstartup
 
 install -m644 $S/xinitrc-Xmodmap $R%{_sysconfdir}/X11/Xmodmap
 for i in xinitrc Xclients fixkeyboard XIM; do install -m755 $S/xinitrc-$i $R%{_sysconfdir}/X11/xinit/$i;done
@@ -100,23 +102,13 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root)
 %config(noreplace) %{_sysconfdir}/X11/Xmodmap
 %config(noreplace) %{_sysconfdir}/X11/Xresources
-%config(noreplace) %{_sysconfdir}/X11/xdm/Xaccess
-%config(noreplace) %{_sysconfdir}/X11/xdm/Xresources
-%config(noreplace) %{_sysconfdir}/X11/xdm/Xservers
-%config(noreplace) %{_sysconfdir}/X11/xdm/xdm-config
+%config(noreplace) %{_sysconfdir}/X11/xdm/*
 %dir %{_sysconfdir}/X11/wmsession.d
 %dir %{_sysconfdir}/X11/xdm
 %dir %{_sysconfdir}/X11/xinit
 %dir %{_sysconfdir}/X11/xinit.d
 %dir %{_sysconfdir}/X11/xsetup.d
 %{_sysconfdir}/X11/Xsession
-%{_sysconfdir}/X11/xdm/GiveConsole
-%{_sysconfdir}/X11/xdm/TakeConsole
-%{_sysconfdir}/X11/xdm/Xsession
-%{_sysconfdir}/X11/xdm/Xsetup_0
-%{_sysconfdir}/X11/xdm/Xwilling
-%{_sysconfdir}/X11/xdm/Xstartup
-%{_sysconfdir}/X11/xdm/Xreset
 %{_sysconfdir}/X11/xinit.d/Mod_Meta_L_Disable
 %{_sysconfdir}/X11/xinit.d/02XIM
 %{_sysconfdir}/X11/xinit/XIM
@@ -125,3 +117,4 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/X11/xinit/xinitrc
 %{_bindir}/*
 %{_datadir}/X11/dm.d
+%{_datadir}/X11/xdm
