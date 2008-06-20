@@ -100,12 +100,10 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root)
 %config(noreplace) %{_sysconfdir}/X11/Xmodmap
 %config(noreplace) %{_sysconfdir}/X11/Xresources
-%config(noreplace) %{_datadir}/X11/dm.d/*
 %config(noreplace) %{_sysconfdir}/X11/xdm/Xaccess
 %config(noreplace) %{_sysconfdir}/X11/xdm/Xresources
 %config(noreplace) %{_sysconfdir}/X11/xdm/Xservers
 %config(noreplace) %{_sysconfdir}/X11/xdm/xdm-config
-%dir %{_datadir}/X11/dm.d
 %dir %{_sysconfdir}/X11/wmsession.d
 %dir %{_sysconfdir}/X11/xdm
 %dir %{_sysconfdir}/X11/xinit
@@ -126,3 +124,4 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/X11/xinit/fixkeyboard
 %{_sysconfdir}/X11/xinit/xinitrc
 %{_bindir}/*
+%{_datadir}/X11/dm.d
