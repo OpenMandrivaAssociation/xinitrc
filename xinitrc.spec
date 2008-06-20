@@ -85,7 +85,7 @@ for i in xinitrc Xclients fixkeyboard XIM; do install -m755 $S/xinitrc-$i $R%{_s
 
 mkdir -p $R%{_bindir}/
 install -m755 $S/xinitrc-RunWM $R%{_bindir}/RunWM
-for i in Fvwm95 MWM AfterStep WindowMaker; do ln -sf RunWM $R%{_bindir}/RunWM.$$i;done
+for i in Fvwm95 MWM AfterStep WindowMaker; do ln -sf RunWM $R%{_bindir}/RunWM.$i;done
 
 mkdir -p $R%{_datadir}/X11/dm.d
 install -m644 $S/kdm.conf $R%{_datadir}/X11/dm.d/10kdm.conf
