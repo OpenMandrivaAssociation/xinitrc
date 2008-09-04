@@ -1,42 +1,35 @@
-%define name    xinitrc
-%define version 2.4.19
-%define release %mkrel 15
-
 Summary:	The default startup script for the X Window System
-Name:		%{name}
-Version:	%{version}
-Release:	%{release}
-URL:		http://www.mandrivalinux.com/
-
-Source0: 	gdm.conf
-Source1: 	GiveConsole
-Source2: 	kdm.conf
-Source3: 	TakeConsole
-Source4: 	x11-Xresources
-Source5: 	Xaccess
-Source6: 	xdm.conf
-Source7: 	xdm-config
-Source8: 	xdm-Xsession
-Source9: 	xinitrc-fixkeyboard
-Source10: 	xinitrc-Mod_Meta_L_Disable
-Source11: 	xinitrc-RunWM
-Source12: 	xinitrc-Xclients
-Source13: 	xinitrc-XIM
-Source14: 	xinitrc-xinitrc
-Source15: 	xinitrc-Xmodmap
-Source16: 	Xresources
-Source17: 	Xservers
-Source18: 	Xsession
-Source19: 	Xsetup_0
-Source20: 	Xwilling
-Source21: 	xdm-Xstartup
-Source22: 	xdm-Xreset
-Source23:	XIM.xinit
-Source24: 	kdm3.conf
-
+Name:		xinitrc
+Version:	2.4.19
+Release:	%mkrel 16
 License:	Public Domain
 Group:		System/X11
-Buildroot:	%{_tmppath}/%{name}-%{version}-root
+URL:		http://www.mandrivalinux.com/
+Source0:	gdm.conf
+Source1:	GiveConsole
+Source2:	kdm.conf
+Source3:	TakeConsole
+Source4:	x11-Xresources
+Source5:	Xaccess
+Source6:	xdm.conf
+Source7:	xdm-config
+Source8:	xdm-Xsession
+Source9:	xinitrc-fixkeyboard
+Source10:	xinitrc-Mod_Meta_L_Disable
+Source11:	xinitrc-RunWM
+Source12:	xinitrc-Xclients
+Source13:	xinitrc-XIM
+Source14:	xinitrc-xinitrc
+Source15:	xinitrc-Xmodmap
+Source16:	Xresources
+Source17:	Xservers
+Source18:	Xsession
+Source19:	Xsetup_0
+Source20:	Xwilling
+Source21:	xdm-Xstartup
+Source22:	xdm-Xreset
+Source23:	XIM.xinit
+Source24:	kdm3.conf
 Requires:	x11-server-xorg
 # Because of <basedir>/X11 directory handling
 Requires:	x11-server-common >= 1.4.2
@@ -44,13 +37,14 @@ Requires:	xdpyinfo
 Requires:	xmodmap
 Requires:	xsetroot
 Requires:	/bin/sh
-Requires: 	/bin/grep
-Requires: 	sessreg
-Requires:   	xrdb
+Requires:	/bin/grep
+Requires:	sessreg
+Requires:	xrdb
 Conflicts:	initscripts < 6.87-2mdk
 Conflicts:	gdm < 2.8.0.0
 Conflicts:	xdm < 1.1.8
-BuildArchitectures:	noarch
+BuildArch:	noarch
+Buildroot:	%{_tmppath}/%{name}-%{version}-buildroot
 
 %description
 The xinitrc package contains the xinitrc file, a script which is used
@@ -58,11 +52,10 @@ to configure your X Window System session or to start a window manager.
 
 %prep
 
-
 %install
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
-R=$RPM_BUILD_ROOT/
+R=%{buildroot}/
 S=%{_sourcedir}
 	
 mkdir -p $R%{_sysconfdir}/X11/{xdm,xinit}
@@ -96,7 +89,7 @@ install -m644 $S/gdm.conf $R%{_datadir}/X11/dm.d/20gdm.conf
 install -m644 $S/xdm.conf $R%{_datadir}/X11/dm.d/30xdm.conf
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root)
