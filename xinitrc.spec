@@ -113,7 +113,6 @@ rm -rf %{buildroot}
 %{_sysconfdir}/X11/xinit/Xclients
 %{_sysconfdir}/X11/xinit/fixkeyboard
 %{_sysconfdir}/X11/xinit/xinitrc
-%{_sysconfdir}/X11/xdm
 %{_bindir}/*
 %{_datadir}/X11/dm.d
 %{_datadir}/X11/xdm
