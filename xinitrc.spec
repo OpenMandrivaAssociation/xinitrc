@@ -101,8 +101,8 @@ rm -rf %{buildroot}
 %config(noreplace) %{_sysconfdir}/X11/xdm/Xservers
 %config(noreplace) %{_sysconfdir}/X11/xdm/Xresources
 %config(noreplace) %{_sysconfdir}/X11/xdm/Xaccess
+%{_sysconfdir}/X11/xdm
 %dir %{_sysconfdir}/X11/wmsession.d
-%dir %{_sysconfdir}/X11/xdm
 %dir %{_sysconfdir}/X11/xinit
 %dir %{_sysconfdir}/X11/xinit.d
 %dir %{_sysconfdir}/X11/xsetup.d
