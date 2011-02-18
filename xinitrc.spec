@@ -1,7 +1,7 @@
 Summary:	The default startup script for the X Window System
 Name:		xinitrc
-Version:	2.4.19
-Release:	%mkrel 28
+Version:	2.4.20
+Release:	%mkrel 1
 License:	Public Domain
 Group:		System/X11
 URL:		http://www.mandrivalinux.com/
@@ -15,7 +15,6 @@ Source6:	xdm.conf
 Source7:	xdm-config
 Source8:	xdm-Xsession
 Source9:	xinitrc-fixkeyboard
-Source10:	xinitrc-Mod_Meta_L_Disable
 Source11:	xinitrc-RunWM
 Source12:	xinitrc-Xclients
 Source13:	xinitrc-XIM
@@ -64,7 +63,6 @@ install -m755 $S/Xsession $R%{_sysconfdir}/X11/
 install -m644 $S/x11-Xresources $R%{_sysconfdir}/X11/Xresources
 
 mkdir $R%{_sysconfdir}/X11/{xinit,xsetup}.d
-install -m 755 $S/xinitrc-Mod_Meta_L_Disable $R%{_sysconfdir}/X11/xinit.d/Mod_Meta_L_Disable
 install -m 755 $S/XIM.xinit $R%{_sysconfdir}/X11/xinit.d/02XIM
 mkdir $R%{_sysconfdir}/X11/wmsession.d
 mkdir -p $R%{_datadir}/X11/xdm
@@ -108,7 +106,6 @@ rm -rf %{buildroot}
 %dir %{_sysconfdir}/X11/xinit.d
 %dir %{_sysconfdir}/X11/xsetup.d
 %{_sysconfdir}/X11/Xsession
-%{_sysconfdir}/X11/xinit.d/Mod_Meta_L_Disable
 %{_sysconfdir}/X11/xinit.d/02XIM
 %{_sysconfdir}/X11/xinit/XIM
 %{_sysconfdir}/X11/xinit/Xclients
