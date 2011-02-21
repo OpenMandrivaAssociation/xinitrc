@@ -1,6 +1,6 @@
 Summary:	The default startup script for the X Window System
 Name:		xinitrc
-Version:	2.4.20
+Version:	2.4.21
 Release:	%mkrel 1
 License:	Public Domain
 Group:		System/X11
