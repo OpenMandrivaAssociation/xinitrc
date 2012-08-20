@@ -52,6 +52,9 @@ to configure your X Window System session or to start a window manager.
 
 %prep
 
+%build
+echo "Hello, i'm a build section"
+
 %install
 rm -rf %{buildroot}
 
@@ -100,7 +103,16 @@ rm -rf %{buildroot}
 %config(noreplace) %{_sysconfdir}/X11/xdm/Xservers
 %config(noreplace) %{_sysconfdir}/X11/xdm/Xresources
 %config(noreplace) %{_sysconfdir}/X11/xdm/Xaccess
-%{_sysconfdir}/X11/xdm
+
+%{_sysconfdir}/X11/xdm/GiveConsole
+%{_sysconfdir}/X11/xdm/TakeConsole
+%{_sysconfdir}/X11/xdm/Xreset
+%{_sysconfdir}/X11/xdm/Xsession
+%{_sysconfdir}/X11/xdm/Xsetup_0
+%{_sysconfdir}/X11/xdm/Xstartup
+%{_sysconfdir}/X11/xdm/Xwilling
+
+
 %dir %{_sysconfdir}/X11/wmsession.d
 %dir %{_sysconfdir}/X11/xinit
 %dir %{_sysconfdir}/X11/xinit.d
