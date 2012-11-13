@@ -1,0 +1,25 @@
+sources:
+  "gdm.conf:"	1ff36f1d369d90b0ea7fa246c3e9070954b46d6a
+  "GiveConsole:"	2d4366940bcb4738d60cab005c1432c83f367161
+  "kdm3.conf:"	8cc2626c8a66d336fef18983ebc862dc8371e0bc
+  "kdm.conf:"	0a371bd9df84a19b75272c30e9f5684b6eff3e4a
+  "TakeConsole:"	d99fb8ffbe43ff6ea15e6e83e1023178c79f59b8
+  "x11-Xresources:"	0decf26448466e01c929fbb3d5a634e314921158
+  "Xaccess:"	132d65e41aba6b81e2f881ec2c28015f7792f9f0
+  "xdm.conf:"	88aefe8be3c6a9d18435f38a079bac291a639da7
+  "xdm-config:"	43e4b8ce5d856f63475c5d275672933f8c6b21a0
+  "xdm-Xreset:"	a75862232f32a7ab4e585633b0109f05b0772816
+  "xdm-Xsession:"	78692186faefd0bfe31d349f955b69d0058f9eec
+  "xdm-Xstartup:"	137a41a1c96f98df93f7e85b3a5cfd183130ca55
+  "XIM.xinit:"	8cb6298af0d5a363aa2e25ccc6f424e1db4f1f5d
+  "xinitrc-fixkeyboard:"	e61c7d3b333e433eac205e4c005b3851ecbd8e29
+  "xinitrc-RunWM:"	38cba812a27b901338df7f3bb79f585e02d8eab9
+  "xinitrc-Xclients:"	6ce971e2153740cb938963d65a16589cdec56261
+  "xinitrc-XIM:"	a36be980c04456c9a8685ba862d681b82d8faaf0
+  "xinitrc-xinitrc:"	4d83eb0cd0cf21e4ec68d6fe54835b7a2b3a4af6
+  "xinitrc-Xmodmap:"	c0064995b71ebb97cb029e3db77f3c9ca1b8ec3e
+  "Xresources:"	45e93332e6710b1a49dd257c013b07e3536fc450
+  "Xservers:"	a48e069de9731bb016927ca8a0e6355f47e4dcb8
+  "Xsession:"	b8a4c82bb2873390a7bca94db006dbb3fe244a20
+  "Xsetup_0:"	15681a63a30725bcd6cedbcfd7e0572ad62d6af3
+  "Xwilling:"	3c10f687082824e51c9ddf421899321389abadda
