@@ -1,0 +1,5 @@
+#!/bin/sh
+# (c) 2000-2002 MandrakeSoft
+# $Id: xinitrc-xinitrc,v 1.2 2002/09/10 05:53:43 flepied Exp $
+
+exec /etc/X11/Xsession $*

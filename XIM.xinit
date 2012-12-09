@@ -1,0 +1,9 @@
+#!/bin/sh
+# to be sourced
+
+### Launch an XIM input server if needed
+# it must be after definition of DESKTOP variable; but before any
+# program that may want user input
+if [ -x /etc/X11/xinit/XIM ]; then
+    . /etc/X11/xinit/XIM
+fi

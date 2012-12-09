@@ -1,0 +1,12 @@
+#!/bin/sh
+#
+# Xreset
+#
+# This program is run as root after the session ends
+#
+
+/usr/bin/sessreg -d -w "/var/log/wtmp" -u "/var/run/utmp" \
+	-x "/usr/share/X11/xdm/Xservers" -l $DISPLAY -h "" $USER
+/usr/share/X11/xdm/TakeConsole
+
+exit 0

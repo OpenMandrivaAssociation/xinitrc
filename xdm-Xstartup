@@ -1,0 +1,19 @@
+#!/bin/sh
+#
+# Xstartup
+#
+# This program is run as root after the user is verified
+
+if [ -f /etc/nologin ]; then
+	xmessage -file /etc/nologin -timeout 30 -center
+	exit 1
+fi
+
+/usr/share/X11/xdm/GiveConsole
+
+# sessreg uses the parent pid, so we have to exec it
+exec /usr/bin/sessreg -a -w "/var/log/wtmp" -u "/var/run/utmp" \
+	-x "/etc/X11/xdm/Xservers" -l $DISPLAY -h "" $USER
+
+# this line is never reached
+exit 0

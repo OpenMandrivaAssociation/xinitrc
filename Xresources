@@ -1,0 +1,127 @@
+! Parts (C) 1996 By Greg J. Badros <gjb@cs.duke.edu>
+! Modification for Mandriva Linux by Chmouel Boudjnah
+! You may use this file as specified under the GNU General Public License
+! $Id: Xresources,v 1.12 2005/06/12 14:38:44 flepied Exp $
+
+#ifdef COLOR
+*customization: -color
+#endif
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! xdm
+
+xlogin*login.translations: #override\
+	Ctrl<Key>R: abort-display()\n\
+	<Key>F1: set-session-argument(failsafe) finish-field()\n\
+	<Key>Delete: delete-character()\n\
+	<Key>Left: move-backward-character()\n\
+	<Key>Right: move-forward-character()\n\
+	<Key>Home: move-to-begining()\n\
+	<Key>End: move-to-end()\n\
+	Ctrl<Key>KP_Enter: set-session-argument(failsafe) finish-field()\n\
+	<Key>KP_Enter: set-session-argument() finish-field()\n\
+	Ctrl<Key>Return: set-session-argument(failsafe) finish-field()\n\
+	<Key>Return: set-session-argument() finish-field()
+
+
+
+
+xlogin*greeting: Welcome to CLIENTHOST
+xlogin*namePrompt: Login:
+
+xlogin*fail: Login incorrect
+
+#if WIDTH > 800
+xlogin*greetFont: -adobe-helvetica-bold-o-normal--24-240-75-75-p-138-iso8859-1
+xlogin*font: -adobe-helvetica-medium-r-normal--18-180-75-75-p-98-iso8859-1
+xlogin*promptFont: -adobe-helvetica-bold-r-normal--18-180-75-75-p-103-iso8859-1
+xlogin*failFont: -adobe-helvetica-bold-r-normal--18-180-75-75-p-103-iso8859-1
+#else
+xlogin*greetFont: -adobe-helvetica-bold-o-normal--17-120-100-100-p-92-iso8859-1
+xlogin*font: -adobe-helvetica-medium-r-normal--12-120-75-75-p-67-iso8859-1
+xlogin*promptFont: -adobe-helvetica-bold-r-normal--12-120-75-75-p-70-iso8859-1
+xlogin*failFont: -adobe-helvetica-bold-o-normal--14-140-75-75-p-82-iso8859-1
+#endif
+
+#ifdef COLOR
+xlogin*greetColor: CadetBlue
+xlogin*failColor: red
+#else
+xlogin*Foreground: black
+xlogin*Background: white
+#endif
+xlogin*useShape: true
+xlogin*logoPadding: 10
+
+
+XConsole.text.geometry:	480x130
+XConsole.verbose:	true
+XConsole*iconic:	true
+XConsole*font:		fixed
+
+Chooser*geometry:		700x500+300+200
+Chooser*allowShellResize:	false
+Chooser*viewport.forceBars:	true
+Chooser*label.font:		*-new century schoolbook-bold-i-normal-*-240-*
+Chooser*label.label:		XDMCP Host Menu from CLIENTHOST
+Chooser*list.font:		-*-*-medium-r-normal-*-*-230-*-*-c-*-iso8859-1
+Chooser*Command.font:		*-new century schoolbook-bold-r-normal-*-180-*
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! xterm (and friends)
+
+XTerm*highlightSelection:  true
+! Uncomment this to use color for the bold attribute
+XTerm*VT100*colorBDMode:  on
+XTerm*VT100*colorBD:  blue
+! Uncomment this to use color for underline attribute
+XTerm.VT100*colorULMode:  on
+XTerm.VT100*underLine:  off
+XTerm*VT100*colorUL:  magenta
+! Uncomment this to display the scrollbar 
+XTerm*scrollBar:  true
+
+! This resource specifies whether or not to ignore the 'alternate screen'
+! of applications such as vi.  When it is on, these applications will restore
+! the contents of the screen when they are exited to what they were before
+! they were started.  When it is off, the contents of vi will remain on the
+! screen after the program is quit.
+XTerm.VT100.titeInhibit:  true
+
+! Uncomment this to turn off color mode in your xterms
+!XTerm.VT100*colorMode:  off
+XTerm.VT100*dynamicColors:  on
+
+! Number of lines of scrollback to save
+XTerm*saveLines:	1500
+
+xterm*reverseWrap:	true
+
+*visualBell:		true
+*scrollTtyOutput:	False
+*scrollKey:		True
+Scrollbar.JumpCursor:	True
+
+! (fg) 20001004 These are compulsory for KDE2, otherwise font will display
+! incorrectly - to say the least
+xterm*font:             fixed
+xterm_color*font:       fixed
+
+! Suppr support.
+*VT100.Translations: #override \
+<Key>BackSpace: string(0x7F)\n\
+<Key>Delete: string("\033[3~")\n\
+<Key>Home: string("\033[1~")\n\
+<Key>End: string("\033[4~")
+
+! GVim great Colors.
+Vim*background:	black
+Vim*foreground:	lightyellow
+Vim*font:		-misc-fixed-medium-r-normal--20-200-75-75-c-100-iso8859-15-*5
+Vim*geometry:	88x35
+Vim*menuBackground: black
+Vim*menuForeground: moccasin
+
+! Fix the Xft dpi to 96; this prevents tiny fonts
+! or HUGE fonts depending on the screen size.
+Xft.dpi: 96

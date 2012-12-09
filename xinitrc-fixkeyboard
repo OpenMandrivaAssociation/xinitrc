@@ -1,0 +1,73 @@
+#!/bin/sh
+# Startup script called from /etc/X11/xinit/xinitrc and /etc/X11/xdm/Xsession
+# to fix keyboard.
+
+# NOTE: when opening an X11 session remotely the keyboard must match
+# the one on the remote display; so we check if there is a keyboard
+# configured for the particular display first.
+
+# to be sure to have xdpyinfo and xmodmap
+PATH=/usr/bin:$PATH
+
+usermodmap=$HOME/.Xmodmap.$DISPLAY
+userxkbmap=$HOME/.Xkbmap.$DISPLAY
+[ ! -r "$usermodmap" ] && usermodmap=$HOME/.Xmodmap
+[ ! -r "$userxkbmap" ] && userxkbmap=$HOME/.Xkbmap
+
+sysmodmap=/etc/X11/Xmodmap.$DISPLAY
+sysxkbmap=/etc/X11/Xkbmap.$DISPLAY
+if ! xdpyinfo | grep "vendor string" | egrep -v "XFree86|X\.Org" > /dev/null 2>&1; then
+        # Xterminal does not have a XFree86 based server, so avoid 
+        # default (= XFree86) maps:
+        [ ! -r "$sysmodmap" ] && sysmodmap=/etc/X11/Xmodmap
+        [ ! -r "$sysxkbmap" ] && sysxkbmap=/etc/X11/xinit/Xkbmap
+fi
+# backward compatibility
+oldsysmodmap=/usr/lib/X11/xinit/.Xmodmap
+
+# only test for XKB if user hasn't asked for no
+[ -x /etc/profile.d/10lang.sh ] && . /etc/profile.d/10lang.sh
+
+if [ "$XKB_IN_USE" != "no" ]; then
+    XKB_IN_USE=
+
+    if xdpyinfo | grep XKEYBOARD > /dev/null 2>&1; then
+        XKB_IN_USE=yes
+    fi
+fi
+
+# merge in keymaps
+if [ -n "$XKB_IN_USE" -a -r $sysxkbmap ]; then
+    setxkbmap `cat $sysxkbmap`
+fi
+
+if [ -n "$XKB_IN_USE" -a -r $userxkbmap ]; then
+    setxkbmap `cat $userxkbmap`
+fi
+
+if [ -z "$XKB_IN_USE" -a ! -L /etc/X11/X ]; then
+    if grep '^exec.*/Xsun' /etc/X11/X > /dev/null 2>&1 && [ -f /etc/X11/XF86Config ]; then
+	xkbsymbols=`sed -n -e 's/^[ 	]*XkbSymbols[ 	]*"\(.*\)".*$/\1/p'`
+	if [ -n "$xkbsymbols" ]; then
+	    setxkbmap -symbols "$xkbsymbols"
+	    XKB_IN_USE=yes
+	fi
+    fi
+fi
+
+# xkb and xmodmap don't play nice together
+if [ -z "$XKB_IN_USE" ]; then
+    if [ -r $oldsysmodmap ]; then
+	xmodmap $oldsysmodmap
+    fi
+
+    if [ -r $sysmodmap ]; then
+	xmodmap $sysmodmap
+    fi
+
+    if [ -r $usermodmap ]; then
+	xmodmap $usermodmap
+    fi
+fi
+
+# fixkeyboard ends here

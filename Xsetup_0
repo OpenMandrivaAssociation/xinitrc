@@ -1,0 +1,31 @@
+#!/bin/sh
+# (C) MandrakeSoft
+# Chmouel Boudjnah <chmouel@mandrakesoft.com>
+#
+# $Id: Xsetup_0,v 1.12 2005/06/12 14:35:57 flepied Exp $
+
+if [ -f /etc/profile.d/kde.sh ];then
+ . /etc/profile.d/kde3.sh
+fi
+
+if [ -x /etc/X11/xinit/fixkeyboard ]; then
+    /etc/X11/xinit/fixkeyboard
+fi
+
+if [ -x /etc/X11/xinit.d/numlock ]; then
+    /etc/X11/xinit.d/numlock &
+fi
+
+for i in /etc/X11/xsetup.d/*.xsetup ; do
+    [ -d $i ] && continue
+
+    if [ -x $i ]; then
+	if grep -q "# to be sourced" $i; then
+	    . $i
+	else
+	    $i &
+	fi
+    fi
+done
+
+# Xsetup_0 ends here

@@ -1,0 +1,182 @@
+#!/bin/sh
+#---------------------------------------------------------------
+# Project         : Mandriva Linux
+# Module          : xinitrc
+# File            : Xsession
+# Version         : $Id: Xsession,v 1.48 2006/05/16 13:48:06 boiko Exp $
+# Author          : Chmouel Boudjnah
+# Created On      : Mon May 30 11:44:57 2005
+# Purpose         : start a graphical session according to the
+#                  argument.
+#---------------------------------------------------------------
+# default values
+
+DESKTOP=default
+
+# read the user (~/.i18n) or system-wide (/etc/sysconfig/i18n) i18n settings
+. /etc/profile.d/10lang.sh
+
+if [ -z "$GDMSESSION" ]; then
+    # redirect errors to a file in user's home directory if we can
+    for errfile in "$HOME/.xsession-errors" "${TMPDIR-/tmp}/xses-$USER" "/tmp/xses-$USER"
+	do
+	if ( umask 077 && cp /dev/null "$errfile" 2> /dev/null )
+	    then
+	    chmod 600 "$errfile"
+	    exec > "$errfile" 2>&1
+	    break
+	fi
+    done
+fi
+
+# Mandriva Linux default background
+if [ "`whoami`" = root ]; then
+    xsetroot -solid "#B20003"
+    IS_ROOT=1
+else
+    IS_ROOT=
+fi
+
+xsetroot -cursor_name watch
+
+userresources=$HOME/.Xresources 
+userresources2=$HOME/.Xdefaults
+sysresources=/etc/X11/Xresources 
+
+# merge in defaults and keymaps 
+if [ -f $sysresources ]; then 
+    xrdb -nocpp -merge $sysresources 
+fi 
+ 
+if [ -f $userresources ]; then 
+    xrdb -merge $userresources 
+fi 
+
+if [ -f $userresources2 ]; then 
+    xrdb -merge $userresources2
+fi 
+
+if [ -x /etc/X11/xinit/fixkeyboard ]; then
+    /etc/X11/xinit/fixkeyboard
+fi
+
+CK_XINIT_SESSION=
+if [ -x /usr/bin/ck-xinit-session -a -z "$XDG_SESSION_COOKIE" ]; then
+    CK_XINIT_SESSION="/usr/bin/ck-xinit-session"
+fi
+
+
+if [ -z "$BROWSER" ] ; then
+	BROWSER=`which www-browser 2> /dev/null`
+	if [ -n "$BROWSER" ] && [ -e "$BROWSER" ] ; then
+		export BROWSER
+	fi
+fi
+
+
+# now, we see if xdm/gdm/kdm has asked for a specific environment
+if [ $# = 1 ]; then
+    DESKTOP=$1
+else
+    # use default DESKTOP from config file
+    # users may want to choose their own desktop
+    # even when x-session is started by startx command.
+    # -- Jaegeum --
+    if [ -f $HOME/.desktop ]; then
+        . $HOME/.desktop >/dev/null 2>&1
+    elif [ -f /etc/sysconfig/desktop ]; then
+	. /etc/sysconfig/desktop >/dev/null 2>&1
+    fi
+fi
+
+### Launch first time wizard if needed
+if [ -z "$IS_ROOT" -a ! -e $HOME/.drakfw ] && type drakfw > /dev/null 2>&1 && touch $HOME/.drakfw > /dev/null 2>&1; then
+    if [ -x /etc/X11/xinit.d/numlock ]; then
+	/etc/X11/xinit.d/numlock
+    fi
+    xsetroot -cursor_name left_ptr
+    exec $CK_XINIT_SESSION drakfw
+fi
+
+
+if [ "${DESKTOP}" = default ]; then
+    SESSION=$(/usr/sbin/chksession -F)
+else
+    SESSION=${DESKTOP}
+fi
+
+# run scripts in /etc/X11/xinit.d
+for i in /etc/X11/xinit.d/* ; do
+    [ -d $i ] && continue
+    # Don't run ??foo.{rpmsave,rpmorig,rpmnew,~} scripts
+    [ "${i%.rpmsave}" != "${i}" ] && continue
+    [ "${i%.rpmorig}" != "${i}" ] && continue
+    [ "${i%.rpmnew}" != "${i}" ] && continue
+    [ "${i%\~}" != "${i}" ] && continue
+
+    if [ -x $i ]; then
+	if grep -q "# to be sourced" $i; then
+	    . $i "${SESSION}"
+	else
+	    $CK_XINIT_SESSION $i "${SESSION}" &
+	fi
+    fi
+done
+
+if [ -n "$DESKTOP" ]; then
+    case $DESKTOP in
+    	failsafe)
+        xsetroot -cursor_name left_ptr
+	type -p rxvt > /dev/null >& 2 && exec rxvt -geometry 80x24-0-0
+	type -p xterm > /dev/null >& 2 && exec xterm -geometry 80x24-0-0
+	type -p xvt > /dev/null >& 2 && exec xvt
+	type -p twm > /dev/null >& 2 && exec $CK_XINIT_SESSION twm
+	;;
+	default)
+	;;
+	*)
+	if type -p "$DESKTOP" > /dev/null; then
+	    exec $CK_XINIT_SESSION /bin/sh -c "$DESKTOP"
+	else
+	    exec $CK_XINIT_SESSION /bin/sh -c "$(/usr/sbin/chksession -x=$DESKTOP)"
+	fi
+	;;
+    esac
+fi
+
+# otherwise, take default action
+if [ -x "$HOME/.xsession" ]; then
+        xsetroot -cursor_name left_ptr
+	exec $CK_XINIT_SESSION /bin/sh -c "$HOME/.xsession"
+elif [ -x "$HOME/.Xclients" ]; then
+        xsetroot -cursor_name left_ptr
+	exec $CK_XINIT_SESSION /bin/sh -c "$HOME/.Xclients"
+fi
+
+# We may try with chksession
+if [ -x /usr/sbin/chksession ];then
+#get the first available
+	SESSION=$(/usr/sbin/chksession -F)
+	[ -n "$SESSION" -a "$SESSION" != default ] && exec $CK_XINIT_SESSION /bin/sh -c "$(/usr/sbin/chksession -x=$SESSION)"
+fi
+
+# Argh! Nothing good is installed. Fall back to icewm
+if [ -x /usr/bin/icewm ];then
+	exec $CK_XINIT_SESSION /usr/bin/icewm
+else
+	# gosh, neither icewm is available; 
+	# fall back to failsafe settings
+        xsetroot -cursor_name left_ptr
+	xclock -geometry 100x100-5+5 &
+	xvt -geometry +0+50 &
+	if [ -x "$BROWSER" -a -f /usr/share/doc/HTML/index.html ]; then
+	    $BROWSER /usr/share/doc/HTML/index.html &
+	fi
+	if [ -x /usr/bin/icewm-light ];then
+	    exec $CK_XINIT_SESSION /usr/bin/icewm-light
+	elif [ -x /usr/bin/twm ];then
+	    exec $CK_XINIT_SESSION /usr/bin/twm
+	else
+	    exec $CK_XINIT_SESSION /usr/bin/xsm
+	fi
+fi

@@ -1,0 +1,6 @@
+!
+! This is the "Xmodmap" file for Standard Keyboards with Windows keys.
+!
+! If you want to have other keymappings for special X-Terminals, just 
+! create a "Xmodmap.${DISPLAY}" file with the according changes.
+!
