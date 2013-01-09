@@ -90,7 +90,7 @@ mkdir -p $R%{_datadir}/X11/dm.d
 install -m644 %{SOURCE2} $R%{_datadir}/X11/dm.d/10kdm.conf
 install -m644 %{SOURCE24} $R%{_datadir}/X11/dm.d/15kdm3.conf
 install -m644 %{SOURCE0} $R%{_datadir}/X11/dm.d/20gdm.conf
-install -m644 $%{SOURCE6} $R%{_datadir}/X11/dm.d/30xdm.conf
+install -m644 %{SOURCE6} $R%{_datadir}/X11/dm.d/30xdm.conf
 
 %files
 %config(noreplace) %{_sysconfdir}/X11/Xmodmap
