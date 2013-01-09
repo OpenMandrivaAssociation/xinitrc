@@ -77,7 +77,10 @@ install -m755 %{SOURCE21} $R%{_datadir}/X11/xdm/Xstartup
 ln -s ../../..%{_datadir}/X11/xdm/{Xsession,Xreset,Xstartup} $R%{_sysconfdir}/X11/xdm
 
 install -m644 %{SOURCE15} $R%{_sysconfdir}/X11/Xmodmap
-for i in %{SOURCE14} %{SOURCE12} %{SOURCE9} %{SOURCE13}; do install -m755 $i $R%{_sysconfdir}/X11/xinit/$i;done
+install -m644 %{SOURCE14} $R%{_sysconfdir}/X11/xinit/xinitrc
+install -m644 %{SOURCE12} $R%{_sysconfdir}/X11/xinit/Xclients
+install -m644 %{SOURCE9} $R%{_sysconfdir}/X11/xinit/fixkeyboard
+install -m644 %{SOURCE13} $R%{_sysconfdir}/X11/xinit/XIM
 
 mkdir -p $R%{_bindir}/
 install -m755 %{SOURCE11} $R%{_bindir}/RunWM
