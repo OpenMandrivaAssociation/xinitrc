@@ -66,7 +66,7 @@ mkdir $R%{_sysconfdir}/X11/{xinit,xsetup}.d
 install -m 755 %{SOURCE23} $R%{_sysconfdir}/X11/xinit.d/02XIM
 mkdir $R%{_sysconfdir}/X11/wmsession.d
 mkdir -p $R%{_datadir}/X11/xdm
-install -m755 {%{SOURCE20},%{SOURCE20},%{SOURCE3},%{SOURCE1}} $R%{_datadir}/X11/xdm
+install -m755 {%{SOURCE20},%{SOURCE19},%{SOURCE3},%{SOURCE1}} $R%{_datadir}/X11/xdm
 ln -s ../../..%{_datadir}/X11/xdm/{Xwilling,Xsetup_0,TakeConsole,GiveConsole} $R%{_sysconfdir}/X11/xdm
 install -m644 %{SOURCE7} %{SOURCE17} %{SOURCE16} %{SOURCE5} $R%{_sysconfdir}/X11/xdm
 ln -s ../../../..%{_sysconfdir}/X11/xdm/{xdm-config,Xservers,Xresources,Xaccess} $R%{_datadir}/X11/xdm
