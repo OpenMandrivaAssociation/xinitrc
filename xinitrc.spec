@@ -76,7 +76,7 @@ install -m755 %{SOURCE22} $R%{_datadir}/X11/xdm/Xreset
 install -m755 %{SOURCE21} $R%{_datadir}/X11/xdm/Xstartup
 ln -s ../../..%{_datadir}/X11/xdm/{Xsession,Xreset,Xstartup} $R%{_sysconfdir}/X11/xdm
 
-install -m644 $%{SOURCE15} $R%{_sysconfdir}/X11/Xmodmap
+install -m644 %{SOURCE15} $R%{_sysconfdir}/X11/Xmodmap
 for i in %{SOURCE14} %{SOURCE12} %{SOURCE9} %{SOURCE13}; do install -m755 $i $R%{_sysconfdir}/X11/xinit/$i;done
 
 mkdir -p $R%{_bindir}/
