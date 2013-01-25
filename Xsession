@@ -16,6 +16,11 @@ DESKTOP=default
 # read the user (~/.i18n) or system-wide (/etc/sysconfig/i18n) i18n settings
 . /etc/profile.d/10lang.sh
 
+# Allow local users to run X applications, irregardless of system hostname
+if [ -x /usr/bin/xhost ] && [ -x /usr/bin/id ]; then
+    xhost +si:localuser:`id -un` >& /dev/null
+fi
+
 if [ -z "$GDMSESSION" ]; then
     # redirect errors to a file in user's home directory if we can
     for errfile in "$HOME/.xsession-errors" "${TMPDIR-/tmp}/xses-$USER" "/tmp/xses-$USER"
@@ -39,22 +44,22 @@ fi
 
 xsetroot -cursor_name watch
 
-userresources=$HOME/.Xresources 
+userresources=$HOME/.Xresources
 userresources2=$HOME/.Xdefaults
-sysresources=/etc/X11/Xresources 
+sysresources=/etc/X11/Xresources
 
-# merge in defaults and keymaps 
-if [ -f $sysresources ]; then 
-    xrdb -nocpp -merge $sysresources 
-fi 
- 
-if [ -f $userresources ]; then 
-    xrdb -merge $userresources 
-fi 
+# merge in defaults and keymaps
+if [ -f $sysresources ]; then
+    xrdb -nocpp -merge $sysresources
+fi
 
-if [ -f $userresources2 ]; then 
+if [ -f $userresources ]; then
+    xrdb -merge $userresources
+fi
+
+if [ -f $userresources2 ]; then
     xrdb -merge $userresources2
-fi 
+fi
 
 if [ -x /etc/X11/xinit/fixkeyboard ]; then
     /etc/X11/xinit/fixkeyboard
