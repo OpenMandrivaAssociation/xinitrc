@@ -18,11 +18,8 @@ if [ -z "$XIM_PROGRAM" -a -z "$XIM" ]; then
 	locale=$LANG
    fi
    case $locale in
-    zh_TW*)
-	XIM=xcin
-	;;
-    zh_CN*)
-	XIM=Chinput
+    zh*|en*)
+        XIM=fcitx
 	;;
     ja*)
 	XIM=uim-anthy
@@ -37,6 +34,7 @@ if [ -z "$XIM_PROGRAM" -a -z "$XIM" ]; then
 fi
 if [ -z "$XIM_PROGRAM" ]; then
    case "$XIM" in
+    fcitx) XIM_PROGRAM=fcitx ;;
     Chinput) XIM_PROGRAM=chinput ;;
     xcin*) XIM_PROGRAM=xcin ;;
     uim-*) XIM_PROGRAM=uim-xim ;;
@@ -89,8 +87,15 @@ if [ -z "$XIM_PROGRAM" ]; then
    esac
 fi
 [ -z "$XMODIFIERS" -a -n "$XIM" ] && export XMODIFIERS="@im=$XIM"
+[ "$XIM" = "fcitx" -a -z "$QT_IM_MODULE" ] && export QT_IM_MODULE="fcitx"
+[ "$XIM" = "fcitx" -a -z "$GTK_IM_MODULE" ] && export GTK_IM_MODULE="fcitx"
 
-if which $XIM_PROGRAM >/dev/null 2>/dev/null
+if [ "$XIM" = "fcitx" ]; then
+	kwriteconfig --file ~/.kde4/share/config/kimpanelrc --group Layout --key inputMethodLauncher file:///usr/share/applications/fcitx.desktop
+fi
+
+# fcitx autostarts through XDG mechanisms
+if [ "$XIM" != "fcitx" ] && which $XIM_PROGRAM >/dev/null 2>/dev/null
 then
     # minichinput has problems running on utf-8 locales
     if [ "$XIM_PROGRAM" = "chinput" ] ; then
