@@ -1,7 +1,7 @@
 Summary:	The default startup script for the X Window System
 Name:		xinitrc
 Version:	2.4.21
-Release:	6
+Release:	7
 License:	Public Domain
 Group:		System/X11
 URL:		http://www.mandrivalinux.com/
