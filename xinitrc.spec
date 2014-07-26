@@ -1,10 +1,10 @@
 Summary:	The default startup script for the X Window System
 Name:		xinitrc
 Version:	2.4.21
-Release:	10
+Release:	10.1
 License:	Public Domain
 Group:		System/X11
-URL:		http://www.mandrivalinux.com/
+URL:		%{disturl}
 Source0:	gdm.conf
 Source1:	GiveConsole
 Source2:	kdm.conf
@@ -28,7 +28,6 @@ Source20:	Xwilling
 Source21:	xdm-Xstartup
 Source22:	xdm-Xreset
 Source23:	XIM.xinit
-Source24:	kdm3.conf
 Requires:	x11-server-xorg
 # Because of <basedir>/X11 directory handling
 Requires:	x11-server-common >= 1.4.2
@@ -88,7 +87,6 @@ for i in Fvwm95 MWM AfterStep WindowMaker; do ln -sf RunWM $R%{_bindir}/RunWM.$i
 
 mkdir -p $R%{_datadir}/X11/dm.d
 install -m644 %{SOURCE2} $R%{_datadir}/X11/dm.d/10kdm.conf
-install -m644 %{SOURCE24} $R%{_datadir}/X11/dm.d/15kdm3.conf
 install -m644 %{SOURCE0} $R%{_datadir}/X11/dm.d/20gdm.conf
 install -m644 %{SOURCE6} $R%{_datadir}/X11/dm.d/30xdm.conf
 
