@@ -41,12 +41,6 @@ xterm*reverseWrap:	true
 *scrollKey:		True
 Scrollbar.JumpCursor:	True
 
-! Suppr support.
-*VT100.Translations: #override \
-<Key>BackSpace: string(0x7F)\n\
-<Key>Delete: string("\033[3~")\n\
-<Key>Home: string("\033[1~")\n\
-<Key>End: string("\033[4~")
 
 ! GVim great Colors.
 Vim*background:	black
