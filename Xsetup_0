@@ -28,4 +28,5 @@ for i in /etc/X11/xsetup.d/*.xsetup ; do
     fi
 done
 
+/usr/bin/xloadimage -onroot -fullscreen /usr/share/mdk/backgrounds/default.png &
 # Xsetup_0 ends here
