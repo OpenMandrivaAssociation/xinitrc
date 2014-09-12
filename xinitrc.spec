@@ -1,7 +1,7 @@
 Summary:	The default startup script for the X Window System
 Name:		xinitrc
 Version:	2.4.21
-Release:	10.1
+Release:	10.3
 License:	Public Domain
 Group:		System/X11
 URL:		%{disturl}
@@ -56,7 +56,6 @@ echo "Hello, i'm a build section"
 %install
 
 R=%{buildroot}
-	
 mkdir -p $R%{_sysconfdir}/X11/{xdm,xinit}
 install -m755 %{SOURCE18} $R%{_sysconfdir}/X11/
 install -m644 %{SOURCE4} $R%{_sysconfdir}/X11/Xresources
