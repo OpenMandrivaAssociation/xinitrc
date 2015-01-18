@@ -1,7 +1,7 @@
 Summary:	The default startup script for the X Window System
 Name:		xinitrc
 Version:	2.4.21
-Release:	18
+Release:	19
 License:	Public Domain
 Group:		System/X11
 URL:		%{disturl}
@@ -38,6 +38,7 @@ Requires:	/bin/sh
 Requires:	/bin/grep
 Requires:	sessreg
 Requires:	xrdb
+Requires:	xli
 Suggests:	s2u
 Conflicts:	initscripts < 6.87-2mdk
 Conflicts:	gdm < 2.8.0.0

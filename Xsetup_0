@@ -24,8 +24,8 @@ for i in /etc/X11/xsetup.d/*.xsetup ; do
     fi
 done
 
-if [ -f /usr/share/mdk/backgrounds/default.png ] && [ -f /usr/bin/xloadimage ]; then
-	/usr/bin/xloadimage -onroot -fullscreen /usr/share/mdk/backgrounds/default.png &
+if [ -f /usr/share/mdk/backgrounds/default.png ] && [ -f /usr/bin/xli ]; then
+	/usr/bin/xli -onroot -fullscreen /usr/share/mdk/backgrounds/default.png &
 fi
 
 # Xsetup_0 ends here
