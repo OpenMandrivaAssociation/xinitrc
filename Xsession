@@ -129,7 +129,7 @@ if [ -n "$DESKTOP" ]; then
 	type -p rxvt > /dev/null >& 2 && exec rxvt -geometry 80x24-0-0
 	type -p xterm > /dev/null >& 2 && exec xterm -geometry 80x24-0-0
 	type -p xvt > /dev/null >& 2 && exec xvt
-	type -p twm > /dev/null >& 2 && exec $CK_XINIT_SESSION twm
+	type -p twm > /dev/null >& 2 && exec twm
 	;;
 	default)
 	;;
@@ -153,17 +153,17 @@ elif [ -x "$HOME/.Xclients" ]; then
 fi
 
 # We may try with chksession
-if [ -x /usr/sbin/chksession ];then
+if [ -x /usr/sbin/chksession ]; then
 #get the first available
 	SESSION=$(/usr/sbin/chksession -F)
 	[ -n "$SESSION" -a "$SESSION" != default ] && exec /bin/sh -c "$(/usr/sbin/chksession -x=$SESSION)"
 fi
 
 # Argh! Nothing good is installed. Fall back to icewm
-if [ -x /usr/bin/icewm ];then
-	exec $CK_XINIT_SESSION /usr/bin/icewm
+if [ -x /usr/bin/icewm ]; then
+	exec /usr/bin/icewm
 else
-	# gosh, neither icewm is available; 
+	# gosh, neither icewm is available;
 	# fall back to failsafe settings
         xsetroot -cursor_name left_ptr
 	xclock -geometry 100x100-5+5 &
