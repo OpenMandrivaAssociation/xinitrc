@@ -17,7 +17,7 @@ DESKTOP=default
 . /etc/profile.d/10lang.sh
 
 # Allow local users to run X applications, irregardless of system hostname
-if [ -x /usr/bin/xhost ] && [ -x /usr/bin/id ]; then
+if [ -x /usr/bin/xhost ] && [ -x /bin/id ]; then
     xhost +si:localuser:`id -un` >& /dev/null
 fi
 
