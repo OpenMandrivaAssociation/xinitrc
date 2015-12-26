@@ -73,7 +73,7 @@ if [ -z "$BROWSER" ] ; then
 fi
 
 
-# now, we see if xdm/gdm/kdm has asked for a specific environment
+# now, we see if xdm/gdm/sddm has asked for a specific environment
 if [ $# = 1 ]; then
     DESKTOP=$1
 else
