@@ -4,10 +4,6 @@
 #
 # $Id: Xsetup_0,v 1.12 2005/06/12 14:35:57 flepied Exp $
 
-if [ -e /usr/share/mdk/backgrounds/default.png ] && [ -f /usr/bin/xli ]; then
-	/usr/bin/xli -onroot -fullscreen /usr/share/mdk/backgrounds/default.png &
-fi
-
 if [ -x /etc/X11/xinit/fixkeyboard ]; then
     /etc/X11/xinit/fixkeyboard
 fi
