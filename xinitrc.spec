@@ -37,7 +37,6 @@ Requires:	/bin/sh
 Requires:	/bin/grep
 Requires:	sessreg
 Requires:	xrdb
-Requires:	xli
 Suggests:	s2u
 Conflicts:	initscripts < 6.87-2mdk
 Conflicts:	gdm < 2.8.0.0
