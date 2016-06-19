@@ -3,110 +3,66 @@
 # read the user (~/.i18n) or system-wide (/etc/sysconfig/i18n) i18n settings
 . /etc/profile.d/10lang.sh
 
-# The Gnome applets must not be launched each time if they are already
-# managed by Gnome; here is the file path to the Gnome Applets config file;
-# so we can do a grep to see if a given applet is already managed by Gnome
-GNOME_APPLET_CONFIG="$HOME/.gnome/panel.d/default/Applet_Config"
-
 if [ -z "$XIM_PROGRAM" -a -z "$XIM" ]; then
-   locale=C
-   if [ ! -z "$LC_ALL" ]; then
+    locale=C
+    if [ ! -z "$LC_ALL" ]; then
 	locale=$LC_ALL
-   elif [ ! -z "$LC_CTYPE" ]; then
+    elif [ ! -z "$LC_CTYPE" ]; then
 	locale=$LC_CTYPE
-   elif [ ! -z "$LANG" ]; then
+    elif [ ! -z "$LANG" ]; then
 	locale=$LANG
-   fi
-   case $locale in
-    zh*|en*)
-        XIM=fcitx
-	;;
-    ja*)
-	XIM=uim-anthy
-	;;
-    ko*)
-	XIM=Ami
-	;;
-    *)
-	XIM=none
-	;;
-   esac
-fi
-if [ -z "$XIM_PROGRAM" ]; then
-   case "$XIM" in
-    fcitx) XIM_PROGRAM=fcitx ;;
-    Chinput) XIM_PROGRAM=chinput ;;
-    xcin*) XIM_PROGRAM=xcin ;;
-    uim-*) XIM_PROGRAM=uim-xim ;;
-    kinput2) XIM_PROGRAM=kinput2 ;;
-    Ami)
-    	# now ami determine which mode it will take from $DESKTOP variable
-	# (not from this script's first argument given by Xsession script)
-	# i think this way seems better.
-	# -- Jaegeum --
-	case $DESKTOP in
-	# Gnome init program automatically restore previous session's
-	# ami_applet. If you put ami_applet here, you may experience a lot of
-	# repeated error windows that report "an applet died abruptly".
-	# so we first check if the ami_applet is referenced in Gnome config
-	# files
+    fi
 
-	# I think removing ` and ` around grep command is more reasonable.
-	# -- Jaegeum --
-	Gnome|GNOME|gnome)
-	    if [ -f "$GNOME_APPLET_CONFIG" ] && \
-		grep -q '\<ami_applet\>' "$GNOME_APPLET_CONFIG";
-	    then
-		XIM_PROGRAM=/bin/true
-	    elif [ -x /usr/bin/ami_applet ]; then
-		XIM_PROGRAM=ami_applet
-	    else
-		XIM_PROGRAM=ami
-	    fi ;;
-	# Now new wmami supports KDE2 docking mode.
-	# XIM_PROG_ARGS variable is added to send xim's arguments if 
-	# they are needed. 
-	# -- Jaegeum --
-	KDE|Kde|kde)
-			XIM_PROGRAM=wmami;;
-	WindowMaker|WINDOWMAKER|Windowmaker|windowmaker)
-			XIM_PROGRAM=wmami;;
-	# Following three WM entries should be added 
-	# because that wmami supports them is already well known fact.
-	# -- Jaegeum --
-	AfterStep|AFTERSTEP|Afterstep|afterstep)
-			XIM_PROGRAM=wmami;;
-	Enlightenment|ENLIGHTENMENT|enlightenment)
-			XIM_PROGRAM=wmami;;
-	BlackBox|BLACKBOX|Blackbox|blackbox)
-			XIM_PROGRAM=wmami;;
+    case $locale in
+	zh*|en*|ja*|ko*)
+	    XIM=fcitx
+	    ;;
 	*)
-			XIM_PROGRAM=ami ;;
-	esac ;;
-    *) XIM_PROGRAM=/bin/true ;;
+	    XIM=none
+	    ;;
+    esac
+fi
+
+if [ -z "$XIM_PROGRAM" ]; then
+    case "$XIM" in
+	fcitx)
+	    XIM_PROGRAM=fcitx
+	    [ -z "$GTK_IM_MODULE" ] && export GTK_IM_MODULE=fcitx
+	    [ -z "$QT_IM_MODULE" ] && export QT_IM_MODULE=fcitx
+	    [ -z "$XMODIFIERS" ] && export XMODIFIERS="@im=fcitx"
+	;;
+	Chinput)
+	    XIM_PROGRAM=chinput
+	;;
+	xcin*)
+	    XIM_PROGRAM=xcin
+	;;
+	uim-*)
+	    XIM_PROGRAM=uim-xim
+	;;
+	kinput2)
+	    XIM_PROGRAM=kinput2
+	;;
+	*)
+	    XIM_PROGRAM=/bin/true
+	;;
    esac
 fi
 [ -z "$XMODIFIERS" -a -n "$XIM" ] && export XMODIFIERS="@im=$XIM"
-[ "$XIM" = "fcitx" -a -z "$QT_IM_MODULE" ] && export QT_IM_MODULE="fcitx"
-[ "$XIM" = "fcitx" -a -z "$GTK_IM_MODULE" ] && export GTK_IM_MODULE="fcitx"
-
-if [ "$XIM" = "fcitx" ]; then
-	kwriteconfig --file ~/.kde4/share/config/kimpanelrc --group Layout --key inputMethodLauncher file:///usr/share/applications/fcitx.desktop
-fi
 
 # fcitx autostarts through XDG mechanisms
-if [ "$XIM" != "fcitx" ] && which $XIM_PROGRAM >/dev/null 2>/dev/null
-then
-    # minichinput has problems running on utf-8 locales
+if [ "$XIM" != "fcitx" ] && which $XIM_PROGRAM >/dev/null 2>/dev/null then
+# minichinput has problems running on utf-8 locales
     if [ "$XIM_PROGRAM" = "chinput" ] ; then
 	case "$LANG" in
-	    zh_TW*|zh_HK*) LANG=zh_TW LC_ALL=zh_TW chinput $XIM_PROG_ARGS &
-		;;
-	    *) LANG=zh_CN LC_ALL=zh_CN chinput $XIM_PROG_ARGS &
-		;;
+	    zh_TW*|zh_HK*)
+		LANG=zh_TW LC_ALL=zh_TW chinput $XIM_PROG_ARGS &
+	    ;;
+	    *)
+		LANG=zh_CN LC_ALL=zh_CN chinput $XIM_PROG_ARGS &
+	    ;;
 	esac
     else
 	$XIM_PROGRAM $XIM_PROG_ARGS &
     fi
 fi
-

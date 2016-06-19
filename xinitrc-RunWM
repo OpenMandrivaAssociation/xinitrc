@@ -39,7 +39,7 @@ fi
 
 if [ -z "$WM_CHOICE" ] ; then
     #try to see if we are called funny names...
-    case "$0" in 
+    case "$0" in
 	*RunWM.Fvwm95)
 	    WM_CHOICE="--Fvwm95"
 	    KNOW_WM="yes"

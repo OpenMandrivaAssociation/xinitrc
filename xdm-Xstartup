@@ -5,8 +5,8 @@
 # This program is run as root after the user is verified
 
 if [ -f /etc/nologin ]; then
-	xmessage -file /etc/nologin -timeout 30 -center
-	exit 1
+    xmessage -file /etc/nologin -timeout 30 -center
+    exit 1
 fi
 
 /usr/share/X11/xdm/GiveConsole
