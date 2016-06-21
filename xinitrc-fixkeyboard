@@ -17,10 +17,10 @@ userxkbmap=$HOME/.Xkbmap.$DISPLAY
 sysmodmap=/etc/X11/Xmodmap.$DISPLAY
 sysxkbmap=/etc/X11/Xkbmap.$DISPLAY
 if ! xdpyinfo | grep "vendor string" | egrep -v "XFree86|X\.Org" > /dev/null 2>&1; then
-        # Xterminal does not have a XFree86 based server, so avoid
-        # default (= XFree86) maps:
-        [ ! -r "$sysmodmap" ] && sysmodmap=/etc/X11/Xmodmap
-        [ ! -r "$sysxkbmap" ] && sysxkbmap=/etc/X11/xinit/Xkbmap
+# Xterminal does not have a XFree86 based server, so avoid
+# default (= XFree86) maps:
+    [ ! -r "$sysmodmap" ] && sysmodmap=/etc/X11/Xmodmap
+    [ ! -r "$sysxkbmap" ] && sysxkbmap=/etc/X11/xinit/Xkbmap
 fi
 # backward compatibility
 oldsysmodmap=/usr/lib/X11/xinit/.Xmodmap
@@ -32,7 +32,7 @@ if [ "$XKB_IN_USE" != "no" ]; then
     XKB_IN_USE=
 
     if xdpyinfo | grep XKEYBOARD > /dev/null 2>&1; then
-        XKB_IN_USE=yes
+	XKB_IN_USE=yes
     fi
 fi
 
