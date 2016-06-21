@@ -46,6 +46,7 @@ fi
 [ -z "$XMODIFIERS" -a -n "$XIM" ] && export XMODIFIERS="@im=$XIM"
 
 # fcitx autostarts through XDG mechanisms
-if [ "$XIM" != "fcitx" ] && which $XIM_PROGRAM >/dev/null 2>/dev/null then
+if [ "$XIM" != "fcitx" ] && which $XIM_PROGRAM >/dev/null 2>/dev/null
+then
     $XIM_PROGRAM $XIM_PROG_ARGS &
 fi
