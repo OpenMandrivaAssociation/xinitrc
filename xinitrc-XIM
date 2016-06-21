@@ -15,7 +15,7 @@ if [ -z "$XIM_PROGRAM" -a -z "$XIM" ]; then
 
     case $locale in
 	zh*|en*|ja*|ko*)
-	    XIM=fcitx
+	    export XIM=fcitx
 	    ;;
 	*)
 	    XIM=none
@@ -26,7 +26,7 @@ fi
 if [ -z "$XIM_PROGRAM" ]; then
     case "$XIM" in
 	fcitx)
-	    XIM_PROGRAM=fcitx
+	    export XIM_PROGRAM=fcitx
 	    [ -z "$GTK_IM_MODULE" ] && export GTK_IM_MODULE=fcitx
 	    [ -z "$QT_IM_MODULE" ] && export QT_IM_MODULE=fcitx
 	    [ -z "$XMODIFIERS" ] && export XMODIFIERS="@im=fcitx"
