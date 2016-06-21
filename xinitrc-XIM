@@ -14,11 +14,11 @@ if [ -z "$XIM_PROGRAM" -a -z "$XIM" ]; then
     fi
 
     case $locale in
-	zh*|en*|ja*|ko*)
+	ar*|en*|ja*|ko*|vi*|zh*)
 	    export XIM=fcitx
 	    ;;
 	*)
-	    XIM=none
+	    export XIM=none
 	    ;;
     esac
 fi
@@ -31,38 +31,21 @@ if [ -z "$XIM_PROGRAM" ]; then
 	    [ -z "$QT_IM_MODULE" ] && export QT_IM_MODULE=fcitx
 	    [ -z "$XMODIFIERS" ] && export XMODIFIERS="@im=fcitx"
 	;;
-	Chinput)
-	    XIM_PROGRAM=chinput
-	;;
-	xcin*)
-	    XIM_PROGRAM=xcin
-	;;
 	uim-*)
-	    XIM_PROGRAM=uim-xim
+	    export XIM_PROGRAM=uim-xim
 	;;
 	kinput2)
-	    XIM_PROGRAM=kinput2
+	    export XIM_PROGRAM=kinput2
 	;;
 	*)
-	    XIM_PROGRAM=/bin/true
+	    export XIM_PROGRAM=/bin/true
 	;;
    esac
 fi
+
 [ -z "$XMODIFIERS" -a -n "$XIM" ] && export XMODIFIERS="@im=$XIM"
 
 # fcitx autostarts through XDG mechanisms
 if [ "$XIM" != "fcitx" ] && which $XIM_PROGRAM >/dev/null 2>/dev/null then
-# minichinput has problems running on utf-8 locales
-    if [ "$XIM_PROGRAM" = "chinput" ] ; then
-	case "$LANG" in
-	    zh_TW*|zh_HK*)
-		LANG=zh_TW LC_ALL=zh_TW chinput $XIM_PROG_ARGS &
-	    ;;
-	    *)
-		LANG=zh_CN LC_ALL=zh_CN chinput $XIM_PROG_ARGS &
-	    ;;
-	esac
-    else
-	$XIM_PROGRAM $XIM_PROG_ARGS &
-    fi
+    $XIM_PROGRAM $XIM_PROG_ARGS &
 fi
