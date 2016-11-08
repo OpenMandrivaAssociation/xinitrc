@@ -21,19 +21,6 @@ if [ -x /usr/bin/xhost ] && [ -x /bin/id ]; then
     xhost +si:localuser:`id -un` >& /dev/null
 fi
 
-if [ -z "$GDMSESSION" ]; then
-    # redirect errors to a file in user's home directory if we can
-    for errfile in "$HOME/.xsession-errors" "${TMPDIR-/tmp}/xses-$USER" "/tmp/xses-$USER"
-	do
-	if ( umask 077 && cp /dev/null "$errfile" 2> /dev/null )
-	    then
-	    chmod 600 "$errfile"
-	    exec > "$errfile" 2>&1
-	    break
-	fi
-    done
-fi
-
 # OpenMandriva Linux default background
 if [ "`whoami`" = root ]; then
     xsetroot -solid "#B20003"
@@ -66,10 +53,10 @@ if [ -x /etc/X11/xinit/fixkeyboard ]; then
 fi
 
 if [ -z "$BROWSER" ] ; then
-	BROWSER=`which www-browser 2> /dev/null`
-	if [ -n "$BROWSER" ] && [ -e "$BROWSER" ] ; then
-		export BROWSER
-	fi
+    BROWSER=`which www-browser 2> /dev/null`
+    if [ -n "$BROWSER" ] && [ -e "$BROWSER" ] ; then
+	export BROWSER
+    fi
 fi
 
 
@@ -77,12 +64,12 @@ fi
 if [ $# = 1 ]; then
     DESKTOP=$1
 else
-    # use default DESKTOP from config file
-    # users may want to choose their own desktop
-    # even when x-session is started by startx command.
-    # -- Jaegeum --
+# use default DESKTOP from config file
+# users may want to choose their own desktop
+# even when x-session is started by startx command.
+# -- Jaegeum --
     if [ -f $HOME/.desktop ]; then
-        . $HOME/.desktop >/dev/null 2>&1
+	. $HOME/.desktop >/dev/null 2>&1
     elif [ -f /etc/sysconfig/desktop ]; then
 	. /etc/sysconfig/desktop >/dev/null 2>&1
     fi
@@ -107,7 +94,7 @@ fi
 # run scripts in /etc/X11/xinit.d
 for i in /etc/X11/xinit.d/* ; do
     [ -d $i ] && continue
-    # Don't run ??foo.{rpmsave,rpmorig,rpmnew,~} scripts
+# Don't run ??foo.{rpmsave,rpmorig,rpmnew,~} scripts
     [ "${i%.rpmsave}" != "${i}" ] && continue
     [ "${i%.rpmorig}" != "${i}" ] && continue
     [ "${i%.rpmnew}" != "${i}" ] && continue
@@ -136,6 +123,11 @@ if [ -n "$DESKTOP" ]; then
 	*)
 	if type -p "$DESKTOP" > /dev/null; then
 	    exec /bin/sh -c "$DESKTOP"
+	elif echo "$DESKTOP" | grep -q ' '; then
+# DESKTOP could refer to an actual command as given by the DM
+# check if '$DESKTOP' contains a space, assume it is a full command
+# and then to just start it
+	    exec /bin/sh -c "$DESKTOP"
 	else
 	    exec /bin/sh -c "$(/usr/sbin/chksession -x=$DESKTOP)"
 	fi
@@ -145,37 +137,37 @@ fi
 
 # otherwise, take default action
 if [ -x "$HOME/.xsession" ]; then
-        xsetroot -cursor_name left_ptr
-	exec /bin/sh -c "$HOME/.xsession"
+    xsetroot -cursor_name left_ptr
+    exec /bin/sh -c "$HOME/.xsession"
 elif [ -x "$HOME/.Xclients" ]; then
-        xsetroot -cursor_name left_ptr
-	exec /bin/sh -c "$HOME/.Xclients"
+    xsetroot -cursor_name left_ptr
+    exec /bin/sh -c "$HOME/.Xclients"
 fi
 
 # We may try with chksession
 if [ -x /usr/sbin/chksession ]; then
-#get the first available
-	SESSION=$(/usr/sbin/chksession -F)
-	[ -n "$SESSION" -a "$SESSION" != default ] && exec /bin/sh -c "$(/usr/sbin/chksession -x=$SESSION)"
+# get the first available
+    SESSION=$(/usr/sbin/chksession -F)
+    [ -n "$SESSION" -a "$SESSION" != default ] && exec /bin/sh -c "$(/usr/sbin/chksession -x=$SESSION)"
 fi
 
 # Argh! Nothing good is installed. Fall back to icewm
 if [ -x /usr/bin/icewm ]; then
-	exec /usr/bin/icewm
+    exec /usr/bin/icewm
 else
-	# gosh, neither icewm is available;
-	# fall back to failsafe settings
-        xsetroot -cursor_name left_ptr
-	xclock -geometry 100x100-5+5 &
-	xvt -geometry +0+50 &
-	if [ -x "$BROWSER" -a -f /usr/share/doc/HTML/index.html ]; then
-	    $BROWSER /usr/share/doc/HTML/index.html &
-	fi
-	if [ -x /usr/bin/icewm-light ];then
-	    exec /usr/bin/icewm-light
-	elif [ -x /usr/bin/twm ];then
-	    exec /usr/bin/twm
-	else
-	    exec /usr/bin/xsm
-	fi
+# gosh, neither icewm is available;
+# fall back to failsafe settings
+    xsetroot -cursor_name left_ptr
+    xclock -geometry 100x100-5+5 &
+    xvt -geometry +0+50 &
+    if [ -x "$BROWSER" -a -f /usr/share/doc/HTML/index.html ]; then
+	$BROWSER /usr/share/doc/HTML/index.html &
+    fi
+    if [ -x /usr/bin/icewm-light ];then
+	exec /usr/bin/icewm-light
+    elif [ -x /usr/bin/twm ];then
+	exec /usr/bin/twm
+    elif [ -x /usr/bin/xsm ];then
+        exec /usr/bin/xsm
+    fi
 fi
