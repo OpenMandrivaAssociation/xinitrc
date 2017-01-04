@@ -1,4 +1,4 @@
-#!/bin/bash -login
+#!/bin/bash -l
 
 exec /etc/X11/Xsession $*
 
