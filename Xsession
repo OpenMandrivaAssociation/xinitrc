@@ -75,6 +75,16 @@ else
     fi
 fi
 
+# Fix for systemd dbus service not getting the display environment variables
+# This fixes an lxqt-config-monitor crash
+
+if [ -d /etc/X11/xinit/xinitrc.d ] ; then
+ for f in /etc/X11/xinit/xinitrc.d/?*.sh ; do
+ [ -x "$f" ] && . "$f"
+ done
+unset f
+fi
+
 ### Launch first time wizard if needed
 if [ -z "$IS_ROOT" -a ! -e $HOME/.drakfw ] && type drakfw > /dev/null 2>&1 && touch $HOME/.drakfw > /dev/null 2>&1; then
     if [ -x /etc/X11/xinit.d/numlock ]; then
