@@ -1,7 +1,7 @@
 Summary:	The default startup script for the X Window System
 Name:		xinitrc
 Version:	2.4.22
-Release:	5
+Release:	6
 License:	Public Domain
 Group:		System/X11
 URL:		%{disturl}
