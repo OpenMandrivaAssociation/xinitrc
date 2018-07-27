@@ -4,6 +4,9 @@
 #
 # $Id: Xsetup_0,v 1.12 2005/06/12 14:35:57 flepied Exp $
 
+# (tpg) auto choose one of graphics cards
+/usr/bin/xrandr --auto ||: > /dev/null 2>&1
+
 if [ -x /etc/X11/xinit/fixkeyboard ]; then
     /etc/X11/xinit/fixkeyboard
 fi
