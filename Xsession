@@ -22,7 +22,7 @@ if [ -x /usr/bin/xhost ] && [ -x /bin/id ]; then
 fi
 
 # OpenMandriva Linux default background
-if [ "`whoami`" = root ]; then
+if [ "$(whoami)" = 'root' ]; then
     xsetroot -solid "#B20003"
     IS_ROOT=1
 else
