@@ -37,17 +37,17 @@ if [ "$XKB_IN_USE" != "no" ]; then
 fi
 
 # merge in keymaps
-if [ -n "$XKB_IN_USE" -a -r $sysxkbmap ]; then
-    setxkbmap `cat $sysxkbmap`
+if [ -n "$XKB_IN_USE" ] && [ -r $sysxkbmap ]; then
+    setxkbmap $(cat $sysxkbmap)
 fi
 
-if [ -n "$XKB_IN_USE" -a -r $userxkbmap ]; then
-    setxkbmap `cat $userxkbmap`
+if [ -n "$XKB_IN_USE" ] && [ -r $userxkbmap ]; then
+    setxkbmap $(cat $userxkbmap)
 fi
 
-if [ -z "$XKB_IN_USE" -a ! -L /etc/X11/X ]; then
+if [ -z "$XKB_IN_USE" ] && [ ! -L /etc/X11/X ]; then
     if grep '^exec.*/Xsun' /etc/X11/X > /dev/null 2>&1 && [ -f /etc/X11/XF86Config ]; then
-	xkbsymbols=`sed -n -e 's/^[ 	]*XkbSymbols[ 	]*"\(.*\)".*$/\1/p'`
+	xkbsymbols=$(sed -n -e 's/^[ 	]*XkbSymbols[ 	]*"\(.*\)".*$/\1/p')
 	if [ -n "$xkbsymbols" ]; then
 	    setxkbmap -symbols "$xkbsymbols"
 	    XKB_IN_USE=yes
