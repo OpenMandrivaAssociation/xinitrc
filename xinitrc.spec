@@ -1,7 +1,7 @@
 Summary:	The default startup script for the X Window System
 Name:		xinitrc
-Version:	2.4.47
-Release:	3
+Version:	2.4.48
+Release:	1
 License:	Public Domain
 Group:		System/X11
 URL:		%{disturl}
@@ -52,7 +52,6 @@ to configure your X Window System session or to start a window manager.
 %prep
 
 %build
-echo "Hello, i'm a build section"
 
 %install
 
