@@ -4,29 +4,23 @@
 /usr/bin/xrandr --auto ||: > /dev/null 2>&1
 
 if [ -x /etc/X11/xinit/fixkeyboard ]; then
-	/etc/X11/xinit/fixkeyboard
+    /etc/X11/xinit/fixkeyboard
 fi
 
 if [ -x /etc/X11/xinit.d/numlock ]; then
-	/etc/X11/xinit.d/numlock &
+    /etc/X11/xinit.d/numlock &
 fi
 
 for i in /etc/X11/xsetup.d/*.xsetup ; do
-	[ -d $i ] && continue
+    [ -d $i ] && continue
 
-	if [ -x $i ]; then
-		if grep -q "# to be sourced" $i; then
-			. $i
-		else
-			$i &
-		fi
+    if [ -x $i ]; then
+	if grep -q "# to be sourced" $i; then
+	    . $i
+	else
+	    $i &
 	fi
+    fi
 done
-
-if [ -x /usr/bin/plymouth ]; then
-	# With X up and in control of the display,
-	# we no longer need plymouth...
-	/usr/bin/plymouth quit --retain-splash
-fi
 
 # Xsetup_0 ends here
